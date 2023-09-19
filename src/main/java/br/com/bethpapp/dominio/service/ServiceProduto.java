@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.bethpapp.dominio.dao.DaoProduto;
 import br.com.bethpapp.dominio.entidade.Produto;
+import br.com.bethpapp.dominio.entidade.ProdutoFornecedor;
 import br.com.bethpapp.dominio.service.exeption.EntidadeEmUsoExeption;
 import br.com.bethpapp.dominio.service.exeption.RegistroNaoEncontrado;
 import jakarta.transaction.Transactional;
@@ -58,28 +59,36 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 			objeto.setCaracteristica(concatenar(objeto));
 		}
 		if (objeto.getFornecedores().size() > 0) {
-			objeto.setCaracteristica(concatenar(objeto));
+			 objeto.getFornecedores().forEach(p-> p.setProduto(objeto));
 		}
+	    objeto.getFornecedores().forEach(p-> p.setProduto(objeto));
 	
-	
-//		if (objeto.getFornecedor() != null && objeto.getFornecedor().getId() != null) {
-//		    System.out.println("passou aqui");
-//		    var fornecedor = daoForncedor.findById(objeto.getFornecedor().getId());
-//		    
-//		    if (fornecedor.isPresent()) {
-//		        objeto.setFornecedor(fornecedor.get());
-//		    	if (objeto.getComponentes().size() > 0) {
-//					objeto.getComponentes().forEach(f-> objeto.getFornecedor());
-//				}
-//		    } else {
-//		        // Lide com o caso em que o fornecedor não foi encontrado no banco de dados
-//		    }
-//		} else {
-//		    // Lide com o caso em que o fornecedor ou seu ID são nulos
-//		}
+
 			produto = daoProduto.save(objeto);
 	
 		return produto;
+	}
+
+	private Produto adicionarFonecedor(Produto objeto) {
+	   
+		for (int i = 0; i < objeto.getFornecedores().size(); i++) {
+			
+			if (objeto.getFornecedores().get(i).getId()==null) {
+				objeto.getFornecedores().get(i).setProduto(objeto);
+			}else {
+				objeto.getFornecedores().remove(i);
+			}
+	
+//	    	int i=0;
+//	        if (produtoFornecedor.getId() == null) {
+//	            // O fornecedor tem um ID nulo, ou o fornecedor em si é nulo
+//	            // Neste caso, você pode atribuir a chave estrangeira do produto
+//	        	i+= 1;
+//	        	objeto.getFornecedores().get(i).setProduto(objeto);
+//	            //produtoFornecedor.setProduto(objeto);
+	        }
+//	    }
+    return objeto;
 	}
 
 	private String concatenar(Produto objeto) {

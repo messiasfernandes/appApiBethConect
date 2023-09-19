@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class FonecedorProdutoDto {
- private String nome;
+	private Long id;
+	private String nome;
 }
