@@ -69,27 +69,7 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 		return produto;
 	}
 
-	private Produto adicionarFonecedor(Produto objeto) {
-	   
-		for (int i = 0; i < objeto.getFornecedores().size(); i++) {
-			
-			if (objeto.getFornecedores().get(i).getId()==null) {
-				objeto.getFornecedores().get(i).setProduto(objeto);
-			}else {
-				objeto.getFornecedores().remove(i);
-			}
-	
-//	    	int i=0;
-//	        if (produtoFornecedor.getId() == null) {
-//	            // O fornecedor tem um ID nulo, ou o fornecedor em si é nulo
-//	            // Neste caso, você pode atribuir a chave estrangeira do produto
-//	        	i+= 1;
-//	        	objeto.getFornecedores().get(i).setProduto(objeto);
-//	            //produtoFornecedor.setProduto(objeto);
-	        }
-//	    }
-    return objeto;
-	}
+
 
 	private String concatenar(Produto objeto) {
 		StringBuilder strBuilder = new StringBuilder();

@@ -28,6 +28,7 @@ public class ProdutoFornecedor extends GeradorId {
 	    @JoinColumn(name = "fornecedor_id")
 	    private Fornecedor fornecedor;
         private LocalDate dataCompra;
+        private Integer garantia;
     	@Setter(value = AccessLevel.NONE)
     	@Digits(integer = 9, fraction = 4)
 	    private BigDecimal valorProduto;

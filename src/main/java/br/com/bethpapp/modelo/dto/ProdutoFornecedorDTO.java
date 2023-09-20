@@ -10,7 +10,7 @@ public class ProdutoFornecedorDTO {
 	private Long id;
 	private FonecedorProdutoDto fornecedor;
 	private LocalDate dataCompra;
-
+	private Integer garantia;
 	private BigDecimal valorProduto;
 
 }
