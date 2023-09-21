@@ -101,7 +101,7 @@ public class CalcularDigitoEan {
 	        Matcher matcher = pattern.matcher(valor);
 
 	        StringBuilder numeroEncontrado = new StringBuilder();
-	        int comprimento= numeroEncontrado.toString().length();
+	      //  int comprimento= numeroEncontrado.toString().length();
 	        
 	        
 	        return numeroEncontrado.toString();

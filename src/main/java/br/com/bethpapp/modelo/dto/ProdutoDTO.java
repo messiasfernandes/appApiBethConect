@@ -10,7 +10,6 @@ import org.springframework.format.annotation.NumberFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
-import br.com.bethpapp.dominio.entidade.ProdutoFornecedor;
 import lombok.Data;
 
 @Data

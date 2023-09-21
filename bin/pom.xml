@@ -75,7 +75,7 @@
 			<artifactId>thumbnailator</artifactId>
 			<version>0.4.17</version>
 		</dependency>
-
+	
 
 	</dependencies>
 

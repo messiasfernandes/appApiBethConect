@@ -47,7 +47,7 @@ public class EntradasdeNotaRepositoryQueryImpl extends ServiceFuncoes implements
 		predicates = criarRestricoes(paramentro, builder, root);
    
 		root.fetch("fornecedor", JoinType.INNER).fetch("cidade",JoinType.INNER);
-		root.fetch("items_entrada", JoinType.INNER).fetch("produto", JoinType.INNER).fetch("estoque", JoinType.INNER);
+		root.fetch("items_entrada", JoinType.INNER).fetch("produto", JoinType.INNER).fetch("estoque", JoinType.LEFT);
 		
 
 		criteria.select(root);
