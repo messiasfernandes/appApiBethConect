@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-public class Famila extends GeradorId {
+public class Classe extends GeradorId {
 
 	
 	private static final long serialVersionUID = 1L;
