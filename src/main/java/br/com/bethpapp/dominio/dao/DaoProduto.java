@@ -10,4 +10,7 @@ public interface DaoProduto extends JpaRepository<Produto, java.lang.Long>, Prod
 	Long isCodigoFabCadastrado(String pfabricante);
 	
 	Produto findByCodigofabricante(String codigofabricante);
+	 @Query("SELECT MAX(p.id) FROM Produto p")
+	    Long findMaxId();
+	
 }

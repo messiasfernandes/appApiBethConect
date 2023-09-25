@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.bethpapp.dominio.dao.DaoProduto;
 import br.com.bethpapp.dominio.entidade.Produto;
-import br.com.bethpapp.dominio.entidade.ProdutoFornecedor;
 import br.com.bethpapp.dominio.service.exeption.EntidadeEmUsoExeption;
 import br.com.bethpapp.dominio.service.exeption.RegistroNaoEncontrado;
 import jakarta.transaction.Transactional;
@@ -58,9 +57,9 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 		if (objeto.getAtributos().size() > 0) {
 			objeto.setCaracteristica(concatenar(objeto));
 		}
-//		if (objeto.getFornecedores().size() > 0) {
-//			 objeto.getFornecedores().forEach(p-> p.setProduto(objeto));
-//		}
+		if (objeto.getProdutoFonecedores().size() > 0) {
+			 objeto.getProdutoFonecedores().forEach(p-> p.setProduto(objeto));
+		}
 //	    objeto.getFornecedores().forEach(p-> p.setProduto(objeto));
 	
 
@@ -108,5 +107,15 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 	}
     public Produto salvarProdutoNota(Produto objeto) {
      return daoProduto.save(objeto)	;
+    }
+    
+    public Long maxid() {
+        Long maxId = daoProduto.findMaxId();
+        
+        if (maxId == null) {
+            return 1L; // Caso não haja registros na tabela, retorne 1 como o próximo ID.
+        } else {
+            return maxId + 1L;
+        }
     }
 }

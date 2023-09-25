@@ -8,9 +8,11 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.bethpapp.dominio.entidade.EstoqueMovimento;
+import br.com.bethpapp.dominio.service.ServiceProduto;
 import br.com.bethpapp.utils.CalcularDigitoEan;
 import br.com.bethpapp.utils.CodigoBarraEAN;
 import br.com.bethpapp.utils.Ean;
@@ -19,6 +21,8 @@ import br.com.bethpapp.utils.Ean;
 class BethAppApplicationTests {
 public  Integer totalpar =0;
 public  Integer totalImpar =0;
+@Autowired
+private ServiceProduto serviceProduto;
 	void contextLoads() {
 		Integer n = 5;
 		BigDecimal n1 = new BigDecimal(10.0);
@@ -167,7 +171,7 @@ System.out.println(proximoMultiploDe10);
         System.out.println("digito verificor"+ digitoVerificador%
         		10);
    }
-	@Test
+
    void geradorEan() {
 		String cnpj="10943852000176";
 		String codiprodForncedor="0201 7159999";
@@ -182,5 +186,10 @@ System.out.println(proximoMultiploDe10);
 		System.out.println("Codigo de barra: " + codigoBarra.validar(codigoBarra));
 		System.out.println("Numero do codigo de barras: " + codigoBarra.getCodigoBarra());
 	   
+   }
+   @Test
+   void buscarid() {
+	   Long id= serviceProduto.maxid();
+	   System.out.println(id);
    }
 }

@@ -72,6 +72,8 @@ public class ServiceForncedorNotaFiscal {
 	}
 
 	public Fornecedor salvarfornecedorXml(Fornecedor fornecedorxml) {
-		return daoForncedor.save(fornecedorxml);
+		var fornecedorsalvo= daoForncedor.save(fornecedorxml);
+		daoForncedor.flush();
+		return fornecedorsalvo;
 	}
 }

@@ -2,7 +2,9 @@ package br.com.bethpapp.modelo.input;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -42,8 +44,7 @@ public class ProdutoInput {
 
 	private BigDecimal customedio;
 	private SubCategoriaInput subcategoria;
-	private List<ProdutoFornecedor> fornecedores = new ArrayList<>();
-
+	private Set<ProdutoFornecedor> produtoFonecedores = new HashSet<>();
 	private List<Atributo> atributos;
 	private List<Componente> componentes;
 

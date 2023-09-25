@@ -3,7 +3,9 @@ package br.com.bethpapp.dominio.entidade;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
@@ -83,9 +85,9 @@ public class Produto extends GeradorId {
 	@JoinColumn
 	private SubCategoria subcategoria;
 	@Fetch(FetchMode.SUBSELECT)
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "produto_fornecedor", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "fornecedor_id"))
-	private List<Fornecedor> fornecedores = new ArrayList<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+	
+	private Set<ProdutoFornecedor> produtoFonecedores = new HashSet<>();
 	@Fetch(FetchMode.SUBSELECT)
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "produto_atributo", joinColumns = @JoinColumn(name = "produto_id"))

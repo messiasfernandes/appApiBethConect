@@ -102,7 +102,8 @@ public class ServiceImportaNotafiscal {
 	@Transactional(rollbackOn = Exception.class)
 	public EntradaNotaCabecario salvar(EntradaNotaCabecario entrada, BigDecimal margen, Long idforma,
 			Integer qtdeparcelas) {
-	
+		var fonecedorsalvo=	serviceForncedorNotaFiscal.salvarfornecedorXml(entrada.getFornecedor());
+		System.out.println( "id do fornecedor" +fonecedorsalvo.getId());
 		entrada.getItems_entrada().forEach(e -> e.setEntradaNotafiscal(entrada));
 
 		if ((daoEntradaNota.buscarnota(entrada.getFornecedor().getId(), entrada.getNumerodanota(), entrada.getStatusEntradaNota()) == true)) {
@@ -110,16 +111,15 @@ public class ServiceImportaNotafiscal {
 			throw new NegocioException("Nota  cadastrada já no banco de dados");
 		} else {
 			Map<String, Produto> produtosExistentes = new HashMap<>();
-			var fonecedorsalvo=	serviceForncedorNotaFiscal.salvarfornecedorXml(entrada.getFornecedor());
+		
 			System.out.println(fonecedorsalvo.getId());
 			for (int i = 0; i < entrada.getItems_entrada().size(); i++) {
 				var produtofornecedor = new ProdutoFornecedor();
 				produtofornecedor.setDataCompra(LocalDate.now());
 				produtofornecedor.setFornecedor(fonecedorsalvo);
-			    produtofornecedor.setValorProduto(entrada.getItems_entrada().get(i).getProduto().getPrecocusto());
+				produtofornecedor.setValorProduto(entrada.getItems_entrada().get(i).getProduto().getPrecocusto());
 				produtofornecedor.setProduto(entrada.getItems_entrada().get(i).getProduto());
-			///produtofornecedor.getProdutos().add(produtosExistentes);
-				entrada.getItems_entrada().get(i).getProduto().getFornecedores().add(fonecedorsalvo);
+				entrada.getItems_entrada().get(i).getProduto().getProdutoFonecedores().add(produtofornecedor);
 				String codigoFabricante = entrada.getItems_entrada().get(i).getProduto().getCodigofabricante();
 				long cont = serviceProduto.buscarCodFabricante(codigoFabricante);
 

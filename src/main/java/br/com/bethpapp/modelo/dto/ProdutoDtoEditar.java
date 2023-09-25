@@ -2,7 +2,9 @@ package br.com.bethpapp.modelo.dto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.format.annotation.NumberFormat;
 
@@ -44,7 +46,7 @@ public class ProdutoDtoEditar {
 	@JsonFormat(pattern = "#,##0.00", shape = Shape.STRING)
 	@NumberFormat(pattern = "#,##0.00")
 	private BigDecimal customedio;
-	private List<ProdutoFornecedorDTO> fornecedores = new ArrayList<>();
+	private Set<ProdutoFornecedorDTO> produtoFonecedores = new HashSet<>();
 
 	private List<AtributoDTO> atributos = new ArrayList<>();
 	private List<ComponeteDTO> componentes;
