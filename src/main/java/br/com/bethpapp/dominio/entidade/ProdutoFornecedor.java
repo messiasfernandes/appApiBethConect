@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
+@Table(name = "produto_fornecedor")
 public class ProdutoFornecedor extends GeradorId {
 
 	private static final long serialVersionUID = 1L;

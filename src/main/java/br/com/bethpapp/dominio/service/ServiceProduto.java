@@ -58,10 +58,10 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 		if (objeto.getAtributos().size() > 0) {
 			objeto.setCaracteristica(concatenar(objeto));
 		}
-		if (objeto.getFornecedores().size() > 0) {
-			 objeto.getFornecedores().forEach(p-> p.setProduto(objeto));
-		}
-	    objeto.getFornecedores().forEach(p-> p.setProduto(objeto));
+//		if (objeto.getFornecedores().size() > 0) {
+//			 objeto.getFornecedores().forEach(p-> p.setProduto(objeto));
+//		}
+//	    objeto.getFornecedores().forEach(p-> p.setProduto(objeto));
 	
 
 			produto = daoProduto.save(objeto);

@@ -83,8 +83,9 @@ public class Produto extends GeradorId {
 	@JoinColumn
 	private SubCategoria subcategoria;
 	@Fetch(FetchMode.SUBSELECT)
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<ProdutoFornecedor> fornecedores = new ArrayList<>();
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "produto_fornecedor", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "fornecedor_id"))
+	private List<Fornecedor> fornecedores = new ArrayList<>();
 	@Fetch(FetchMode.SUBSELECT)
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "produto_atributo", joinColumns = @JoinColumn(name = "produto_id"))

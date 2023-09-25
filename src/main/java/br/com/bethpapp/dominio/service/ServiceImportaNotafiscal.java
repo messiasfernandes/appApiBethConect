@@ -111,14 +111,15 @@ public class ServiceImportaNotafiscal {
 		} else {
 			Map<String, Produto> produtosExistentes = new HashMap<>();
 			var fonecedorsalvo=	serviceForncedorNotaFiscal.salvarfornecedorXml(entrada.getFornecedor());
-			
+			System.out.println(fonecedorsalvo.getId());
 			for (int i = 0; i < entrada.getItems_entrada().size(); i++) {
 				var produtofornecedor = new ProdutoFornecedor();
 				produtofornecedor.setDataCompra(LocalDate.now());
 				produtofornecedor.setFornecedor(fonecedorsalvo);
-				produtofornecedor.setValorProduto(entrada.getItems_entrada().get(i).getProduto().getPrecocusto());
+			    produtofornecedor.setValorProduto(entrada.getItems_entrada().get(i).getProduto().getPrecocusto());
 				produtofornecedor.setProduto(entrada.getItems_entrada().get(i).getProduto());
-				entrada.getItems_entrada().get(i).getProduto().getFornecedores().add(produtofornecedor);
+			///produtofornecedor.getProdutos().add(produtosExistentes);
+				entrada.getItems_entrada().get(i).getProduto().getFornecedores().add(fonecedorsalvo);
 				String codigoFabricante = entrada.getItems_entrada().get(i).getProduto().getCodigofabricante();
 				long cont = serviceProduto.buscarCodFabricante(codigoFabricante);
 
