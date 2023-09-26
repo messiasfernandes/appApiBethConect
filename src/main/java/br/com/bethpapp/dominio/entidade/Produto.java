@@ -21,6 +21,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
@@ -86,7 +87,6 @@ public class Produto extends GeradorId {
 	private SubCategoria subcategoria;
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
-	
 	private Set<ProdutoFornecedor> produtoFonecedores = new HashSet<>();
 	@Fetch(FetchMode.SUBSELECT)
 	@ElementCollection(fetch = FetchType.LAZY)

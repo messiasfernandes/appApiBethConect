@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
 import br.com.bethpapp.dominio.dao.DaoEntradaNota;
 import br.com.bethpapp.dominio.entidade.EntradaNotaCabecario;
 import br.com.bethpapp.dominio.entidade.Fornecedor;
+import br.com.bethpapp.dominio.entidade.FornecedorProdutoid;
 import br.com.bethpapp.dominio.entidade.Produto;
 import br.com.bethpapp.dominio.entidade.ProdutoFornecedor;
 import br.com.bethpapp.dominio.service.exeption.NegocioException;
@@ -114,10 +115,14 @@ public class ServiceImportaNotafiscal {
 		
 			System.out.println(fonecedorsalvo.getId());
 			for (int i = 0; i < entrada.getItems_entrada().size(); i++) {
+				Long idprod= serviceProduto.maxid();
 				var produtofornecedor = new ProdutoFornecedor();
 				produtofornecedor.setDataCompra(LocalDate.now());
+				produtofornecedor.setId(new FornecedorProdutoid(idprod, fonecedorsalvo.getId()));
 				produtofornecedor.setFornecedor(fonecedorsalvo);
+				produtofornecedor.setGarantia(90);
 				produtofornecedor.setValorProduto(entrada.getItems_entrada().get(i).getProduto().getPrecocusto());
+				entrada.getItems_entrada().get(i).getProduto().setId(idprod);
 				produtofornecedor.setProduto(entrada.getItems_entrada().get(i).getProduto());
 				entrada.getItems_entrada().get(i).getProduto().getProdutoFonecedores().add(produtofornecedor);
 				String codigoFabricante = entrada.getItems_entrada().get(i).getProduto().getCodigofabricante();
