@@ -2,6 +2,7 @@ package br.com.bethpapp.dominio.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.bethpapp.dominio.dao.DaoProduto;
 import br.com.bethpapp.dominio.entidade.Produto;
 import br.com.bethpapp.dominio.service.exeption.EntidadeEmUsoExeption;
+import br.com.bethpapp.dominio.service.exeption.NegocioException;
 import br.com.bethpapp.dominio.service.exeption.RegistroNaoEncontrado;
 import jakarta.transaction.Transactional;
 
@@ -54,16 +56,23 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 	public Produto salvar(Produto objeto) {
 	   
 		Produto produto = null;
-		if (objeto.getAtributos().size() > 0) {
-			objeto.setCaracteristica(concatenar(objeto));
+		try {
+			if (objeto.getAtributos().size() > 0) {
+				objeto.setCaracteristica(concatenar(objeto));
+			}
+			if (objeto.getProdutoFonecedores().size() > 0) {
+				 objeto.getProdutoFonecedores().forEach(p-> p.setProduto(objeto));
+			}
+
+			produto = daoProduto.save(objeto);
+		} catch (InvalidDataAccessApiUsageException e) {
+			 throw new NegocioException("Registro duplicado de fornecedor");
 		}
-		if (objeto.getProdutoFonecedores().size() > 0) {
-			 objeto.getProdutoFonecedores().forEach(p-> p.setProduto(objeto));
-		}
+	
 //	    objeto.getFornecedores().forEach(p-> p.setProduto(objeto));
 	
 
-			produto = daoProduto.save(objeto);
+			
 	
 		return produto;
 	}

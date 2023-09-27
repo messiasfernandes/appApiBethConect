@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -104,4 +105,13 @@ public class ControllerExeption extends ResponseEntityExceptionHandler {
 //	    mav.setViewName("/error");
 //	    return mav;
 //	}
+	@ExceptionHandler(InvalidDataAccessApiUsageException.class)
+	public ResponseEntity<Object> chavecompoostaExeption(InvalidDataAccessApiUsageException ex, WebRequest request){
+		var status = HttpStatus.BAD_REQUEST;
+		var problema = Problema.builder().
+				status(status.value()).
+				titulo(ex.getMessage())
+				.dataHora(OffsetDateTime.now()).build();
+		return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
+	}
 }
