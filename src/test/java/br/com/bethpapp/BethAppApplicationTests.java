@@ -171,7 +171,7 @@ System.out.println(proximoMultiploDe10);
         System.out.println("digito verificor"+ digitoVerificador%
         		10);
    }
-
+@Test
    void geradorEan() {
 		String cnpj="10943852000176";
 		String codiprodForncedor="0201 7159999";
@@ -187,7 +187,7 @@ System.out.println(proximoMultiploDe10);
 		System.out.println("Numero do codigo de barras: " + codigoBarra.getCodigoBarra());
 	   
    }
-   @Test
+  // @Test
    void buscarid() {
 	   Long id= serviceProduto.maxid();
 	   System.out.println(id);

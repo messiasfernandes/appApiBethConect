@@ -6,4 +6,5 @@ import lombok.Data;
 public class FonecedorProdutoDto {
 	private Long id;
 	private String nome;
+	private String cpfouCnpj;
 }

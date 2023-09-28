@@ -1,5 +1,7 @@
 package br.com.bethpapp.controller;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.bethpapp.controller.documentacao.ProdutoOpenApi;
 import br.com.bethpapp.coversor.ProdutoConverter;
 import br.com.bethpapp.dominio.service.ServiceProduto;
+import br.com.bethpapp.modelo.dto.CodigoBarraEANDTO;
+import br.com.bethpapp.modelo.dto.EntradaNotaCabecarioDTO;
 import br.com.bethpapp.modelo.dto.ProdutoDTO;
 import br.com.bethpapp.modelo.dto.ProdutoDtoEditar;
 import br.com.bethpapp.modelo.input.ProdutoInput;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import net.minidev.json.JSONObject;
 
 @RequestMapping("/produtos")
 @RestController
@@ -37,7 +42,7 @@ public class ProdutoController implements ProdutoOpenApi {
 	@GetMapping
 	@Override
 	public ResponseEntity<Page<ProdutoDTO>> listar(
-			
+
 			@RequestParam(value = "paramentro", required = false, defaultValue = "") String paramentro,
 			@RequestParam(value = "page", defaultValue = "0") Integer pagina,
 			@RequestParam(value = "size", defaultValue = "4") Integer size, Pageable page) {
@@ -45,14 +50,13 @@ public class ProdutoController implements ProdutoOpenApi {
 				.body(produtoConverter.topage(serviceProduto.buscar(paramentro, page)));
 	}
 
-    @GetMapping("/{idproduto}")
+	@GetMapping("/{idproduto}")
 	@Override
 	public ResponseEntity<ProdutoDtoEditar> buscar(@PathVariable Long idproduto) {
 
-		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDtoEdit(serviceProduto.buccarporid(idproduto)));
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(produtoConverter.toDtoEdit(serviceProduto.buccarporid(idproduto)));
 	}
-
-
 
 	@PutMapping("/{id}")
 	@Override
@@ -73,13 +77,21 @@ public class ProdutoController implements ProdutoOpenApi {
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoConverter.toDto(produtosalvo));
 	}
 
-	 @DeleteMapping("/{idproduto}")
+	@DeleteMapping("/{idproduto}")
 	@Override
 	public ResponseEntity<Void> remover(@PathVariable Long idproduto) {
 		serviceProduto.excluir(idproduto);
 		return ResponseEntity.noContent().build();
 	}
 
+	@PostMapping("/gerarean13")
+	public ResponseEntity<CodigoBarraEANDTO > gerarNota(@RequestParam(value = "cnpj", required = true) String cnpj,
+			@RequestParam(value = "codigofabricandte", required = true) String codigofabricandte) {
+	//	String ean13 = serviceProduto.geararCodioEan13(cnpj, codigofabricandte);
+	    CodigoBarraEANDTO dto = new CodigoBarraEANDTO();
+	    dto.setEan13(serviceProduto.geararCodioEan13(cnpj, codigofabricandte));
 
+	    return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+	}
 
 }

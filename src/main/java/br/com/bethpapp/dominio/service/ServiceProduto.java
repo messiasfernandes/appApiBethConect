@@ -1,5 +1,8 @@
 package br.com.bethpapp.dominio.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -9,9 +12,12 @@ import org.springframework.stereotype.Service;
 
 import br.com.bethpapp.dominio.dao.DaoProduto;
 import br.com.bethpapp.dominio.entidade.Produto;
+import br.com.bethpapp.dominio.entidade.ProdutoFornecedor;
 import br.com.bethpapp.dominio.service.exeption.EntidadeEmUsoExeption;
 import br.com.bethpapp.dominio.service.exeption.NegocioException;
 import br.com.bethpapp.dominio.service.exeption.RegistroNaoEncontrado;
+import br.com.bethpapp.utils.CalcularDigitoEan;
+import br.com.bethpapp.utils.CodigoBarraEAN;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -61,12 +67,18 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 				objeto.setCaracteristica(concatenar(objeto));
 			}
 			if (objeto.getProdutoFonecedores().size() > 0) {
+				System.out.println("ENTROU aqui");
 				 objeto.getProdutoFonecedores().forEach(p-> p.setProduto(objeto));
+//				 if ("".equals(objeto.getCodigoEan13()) || "SEM GTIN".equals(objeto.getCodigoEan13())) {
+//					    // O campo codigoEan13 está vazio ou igual a "SEM GTIN"
+//					    // Chame a função geararCodioEan13 para gerar o código EAN 13
+//					    objeto.setCodigoEan13(geararCodioEan13(objeto));
+//					}
 			}
 
 			produto = daoProduto.save(objeto);
 		} catch (InvalidDataAccessApiUsageException e) {
-			 throw new NegocioException("Registro duplicado de fornecedor");
+			 throw new NegocioException("Registro  de fornecedor duplicado");
 		}
 	
 //	    objeto.getFornecedores().forEach(p-> p.setProduto(objeto));
@@ -110,9 +122,24 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 		return daoProduto.findByCodigofabricante(codigofabricante);
 	}
 	
-	public String  geararCodioEan13(String codigofabricante) {
-		var codigoPais="789";
-		return"";
+	public String  geararCodioEan13(String pcnpj , String codigofabricante) {
+		System.out.println(pcnpj);
+     System.out.println(codigofabricante);
+		String cnpj=pcnpj;
+
+		String codiprodForncedor=codigofabricante;
+		String codigopais="789";
+		String codigoFornecedor="";
+		System.out.println(cnpj);
+		codigoFornecedor=cnpj.substring(0,5);
+		String codigoproduto=CalcularDigitoEan.extraireFormatar(codiprodForncedor);
+	   String ean=codigopais+codigoFornecedor+codigoproduto;
+	   System.out.println(ean);
+	   String ean13 = CalcularDigitoEan.calcularEAN13(ean);
+	   CodigoBarraEAN codigoBarra = new CodigoBarraEAN(ean13);
+	///   System.out.println("Codigo de barra: " + codigoBarra.validar(codigoBarra));
+		System.out.println("Numero do codigo de barras: " + codigoBarra.getCodigoBarra());
+	   return codigoBarra.getCodigoBarra();
 	}
     public Produto salvarProdutoNota(Produto objeto) {
      return daoProduto.save(objeto)	;
