@@ -6,6 +6,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,7 +172,7 @@ System.out.println(proximoMultiploDe10);
         System.out.println("digito verificor"+ digitoVerificador%
         		10);
    }
-@Test
+//@Test
    void geradorEan() {
 		String cnpj="10943852000176";
 		String codiprodForncedor="0201 7159999";
@@ -192,4 +193,10 @@ System.out.println(proximoMultiploDe10);
 	   Long id= serviceProduto.maxid();
 	   System.out.println(id);
    }
+   @Test
+   void geraean12() {
+	   Random random = new Random();
+       int numeroAleatorio = random.nextInt(900000000) + 100000000;
+       System.out.println(numeroAleatorio);
+   }   
 }

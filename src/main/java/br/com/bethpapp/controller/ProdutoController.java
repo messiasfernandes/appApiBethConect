@@ -85,8 +85,8 @@ public class ProdutoController implements ProdutoOpenApi {
 	}
 
 	@PostMapping("/gerarean13")
-	public ResponseEntity<CodigoBarraEANDTO > gerarNota(@RequestParam(value = "cnpj", required = true) String cnpj,
-			@RequestParam(value = "codigofabricandte", required = true) String codigofabricandte) {
+	public ResponseEntity<CodigoBarraEANDTO > gerarEan13(@RequestParam(value = "cnpj", required = false) String cnpj,
+			@RequestParam(value = "codigofabricandte", required = false) String codigofabricandte) {
 	//	String ean13 = serviceProduto.geararCodioEan13(cnpj, codigofabricandte);
 	    CodigoBarraEANDTO dto = new CodigoBarraEANDTO();
 	    dto.setEan13(serviceProduto.geararCodioEan13(cnpj, codigofabricandte));
@@ -94,4 +94,21 @@ public class ProdutoController implements ProdutoOpenApi {
 	    return ResponseEntity.status(HttpStatus.CREATED).body(dto);
 	}
 
+	//@PostMapping("/gerarean13")
+	public ResponseEntity< String> geararCodioEan13(@RequestParam(value = "cnpj", required = false) String cnpj,
+			@RequestParam(value = "codigofabricandte", required = false) String codigofabricandte) {
+	    // Seu código para gerar o EAN-13
+	    
+	    String ean13 = serviceProduto.geararCodioEan13(cnpj, codigofabricandte);
+	    
+	    // Crie um JSON com a chave "ean13" e o valor do EAN-13
+	    JSONObject json = new JSONObject();
+	    json.put("ean13", ean13);
+	    if (ean13 != null) {
+	        return ResponseEntity.status(HttpStatus.CREATED).body(json.toString());
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao gerar o código EAN-13");
+	 
+	    }
+	}
 }

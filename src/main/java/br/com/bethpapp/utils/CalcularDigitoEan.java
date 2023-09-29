@@ -97,13 +97,35 @@ public class CalcularDigitoEan {
 	}
 	
 	public String extractAndFormatNumber(String valor) {
-		   Pattern pattern = Pattern.compile("\\d+"); // Isso corresponderá a um ou mais dígitos
-	        Matcher matcher = pattern.matcher(valor);
-
-	        StringBuilder numeroEncontrado = new StringBuilder();
-	      //  int comprimento= numeroEncontrado.toString().length();
-	        
-	        
-	        return numeroEncontrado.toString();
+		Pattern pattern = Pattern.compile("\\d+"); // Isso corresponderá a um ou mais dígitos
+		Matcher matcher = pattern.matcher(valor);
+		String numeroEncontrado = "";
+		String num="";
+		  while (matcher.find()) {
+			  num  = matcher.group();
+			  numeroEncontrado +=num;
+	            System.out.println("Número encontrado: " + numeroEncontrado);
+	        }
+			int comprimento = numeroEncontrado.length();
+           System.out.println(comprimento);
+			if (comprimento == 2) {
+				numeroEncontrado = "0" + numeroEncontrado;
+			}
+			if (comprimento == 3) {
+				numeroEncontrado = "0" + numeroEncontrado;
+			}
+			if (comprimento > 3) {
+				System.out.println(numeroEncontrado);
+				var numeromaior= numeroEncontrado.substring(0, 9);
+				numeroEncontrado = numeromaior;
+				System.out.println("Número Maior: " + numeromaior);
+			}
+			System.out.println("Número formatado: " + numeroEncontrado);
+		
+		//	System.out.println("Nenhum número encontrado na string.");
+		
+			
+		
+		return numeroEncontrado;
 	}
 }

@@ -2,6 +2,7 @@ package br.com.bethpapp.dominio.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -9,6 +10,7 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import br.com.bethpapp.dominio.dao.DaoProduto;
 import br.com.bethpapp.dominio.entidade.Produto;
@@ -125,19 +127,36 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 	public String  geararCodioEan13(String pcnpj , String codigofabricante) {
 		System.out.println(pcnpj);
      System.out.println(codigofabricante);
+     String ean13 ="";
+ 	String codigopais="789";
 		String cnpj=pcnpj;
+       if( StringUtils.hasText(cnpj) && StringUtils.hasText(codigofabricante)) {
+    	   String codiprodForncedor=codigofabricante;
+   	
+   		String codigoFornecedor="";
+   		System.out.println(cnpj);
+   		codigoFornecedor=cnpj.substring(0,5);
+   		String codigoproduto=CalcularDigitoEan.extraireFormatar(codiprodForncedor);
+   	   String ean=codigopais+codigoFornecedor+codigoproduto;
+   	   System.out.println(ean);
+   	  ean13 = CalcularDigitoEan.calcularEAN13(ean);
+   	   
+       }else {
+    	   Random random = new Random();
+    	  
+           long numeroAleatorio = random.nextLong(); // Gera um long aleatório de 64 bits
 
-		String codiprodForncedor=codigofabricante;
-		String codigopais="789";
-		String codigoFornecedor="";
-		System.out.println(cnpj);
-		codigoFornecedor=cnpj.substring(0,5);
-		String codigoproduto=CalcularDigitoEan.extraireFormatar(codiprodForncedor);
-	   String ean=codigopais+codigoFornecedor+codigoproduto;
-	   System.out.println(ean);
-	   String ean13 = CalcularDigitoEan.calcularEAN13(ean);
-	   CodigoBarraEAN codigoBarra = new CodigoBarraEAN(ean13);
-	///   System.out.println("Codigo de barra: " + codigoBarra.validar(codigoBarra));
+           // Limita o número gerado para ter exatamente 12 dígitos
+           numeroAleatorio = Math.abs(numeroAleatorio);
+           String numero= Long.toString(numeroAleatorio);
+           var ean=codigopais+  numero.substring(0,9);
+
+           ean13 = CalcularDigitoEan.calcularEAN13(ean);
+         	 
+       }
+     
+       CodigoBarraEAN codigoBarra = new CodigoBarraEAN(ean13);
+	   System.out.println("Codigo de barra: " + codigoBarra.validar(codigoBarra));
 		System.out.println("Numero do codigo de barras: " + codigoBarra.getCodigoBarra());
 	   return codigoBarra.getCodigoBarra();
 	}
