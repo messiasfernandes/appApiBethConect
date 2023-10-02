@@ -1,7 +1,5 @@
 package br.com.bethpapp.dominio.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +12,12 @@ import org.springframework.util.StringUtils;
 
 import br.com.bethpapp.dominio.dao.DaoProduto;
 import br.com.bethpapp.dominio.entidade.Produto;
-import br.com.bethpapp.dominio.entidade.ProdutoFornecedor;
 import br.com.bethpapp.dominio.service.exeption.EntidadeEmUsoExeption;
 import br.com.bethpapp.dominio.service.exeption.NegocioException;
 import br.com.bethpapp.dominio.service.exeption.RegistroNaoEncontrado;
 import br.com.bethpapp.utils.CalcularDigitoEan;
 import br.com.bethpapp.utils.CodigoBarraEAN;
+import br.com.bethpapp.utils.GeradordeCodigo;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -76,6 +74,9 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 //					    // Chame a função geararCodioEan13 para gerar o código EAN 13
 //					    objeto.setCodigoEan13(geararCodioEan13(objeto));
 //					}
+			}
+			if(objeto.getCodigofabricante()==null) {
+              objeto.setCodigofabricante(GeradordeCodigo.GerarCodigoFabricante());				
 			}
 
 			produto = daoProduto.save(objeto);
@@ -162,6 +163,10 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 	}
     public Produto salvarProdutoNota(Produto objeto) {
      return daoProduto.save(objeto)	;
+    }
+    public String geraCodigoEna() {
+    	return GeradordeCodigo.CriarEann13();
+    	
     }
     
     public Long maxid() {

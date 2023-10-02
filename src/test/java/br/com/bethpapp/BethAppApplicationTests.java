@@ -3,6 +3,7 @@ package br.com.bethpapp;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -193,10 +194,27 @@ System.out.println(proximoMultiploDe10);
 	   Long id= serviceProduto.maxid();
 	   System.out.println(id);
    }
-   @Test
+  
    void geraean12() {
 	   Random random = new Random();
        int numeroAleatorio = random.nextInt(900000000) + 100000000;
        System.out.println(numeroAleatorio);
-   }   
+   }  
+   @Test
+   void datanumerico() {
+	   LocalDateTime datahora= LocalDateTime.now();
+	   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
+	   String formattedDateTime = datahora.format(formatter);
+   String stringConcatenada ="789"+formattedDateTime.substring(5,14);
+ 
+       System.out.println(formattedDateTime);
+      System.out.println(stringConcatenada);
+      String ean13 = CalcularDigitoEan.calcularEAN13(stringConcatenada);
+	   CodigoBarraEAN codigoBarra = new CodigoBarraEAN(ean13);
+		System.out.println("Codigo de barra: " + codigoBarra.validar(codigoBarra));
+		System.out.println("Numero do codigo de barras: " + codigoBarra.getCodigoBarra());
+   
+   }
+   
 }
