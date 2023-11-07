@@ -1,7 +1,5 @@
 package br.com.bethpapp.controller;
 
-import java.math.BigDecimal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,13 +19,11 @@ import br.com.bethpapp.controller.documentacao.ProdutoOpenApi;
 import br.com.bethpapp.coversor.ProdutoConverter;
 import br.com.bethpapp.dominio.service.ServiceProduto;
 import br.com.bethpapp.modelo.dto.CodigoBarraEANDTO;
-import br.com.bethpapp.modelo.dto.EntradaNotaCabecarioDTO;
 import br.com.bethpapp.modelo.dto.ProdutoDTO;
 import br.com.bethpapp.modelo.dto.ProdutoDtoEditar;
 import br.com.bethpapp.modelo.input.ProdutoInput;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import net.minidev.json.JSONObject;
 
 @RequestMapping("/produtos")
 @RestController

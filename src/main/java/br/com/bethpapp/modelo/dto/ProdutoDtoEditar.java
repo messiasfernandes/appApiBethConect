@@ -10,9 +10,12 @@ import org.springframework.format.annotation.NumberFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
 @Data
+@JsonInclude(value = Include.NON_NULL)
 public class ProdutoDtoEditar {
 	private SubCategoriaDTO subcategoria;
 
