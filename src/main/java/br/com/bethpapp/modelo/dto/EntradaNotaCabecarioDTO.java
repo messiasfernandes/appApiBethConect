@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import br.com.bethpapp.dominio.entidade.ImpostoNota;
 import br.com.bethpapp.dominio.entidade.TransporteNotafiscal;
