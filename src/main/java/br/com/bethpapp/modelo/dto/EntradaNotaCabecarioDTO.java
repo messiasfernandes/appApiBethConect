@@ -17,7 +17,6 @@ import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 @Data
-
 public class EntradaNotaCabecarioDTO {
 	private Long id;
 	@Column(length = 25)
