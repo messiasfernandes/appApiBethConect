@@ -2,7 +2,6 @@ package br.com.bethpapp.dominio.entidade;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +25,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
@@ -64,6 +64,9 @@ public class Produto extends GeradorId {
 	private String caracteristica;
 	@Column(length = 20)
 	private String codigofabricante;
+	@Transient
+	@Getter(value = AccessLevel.NONE)
+	private String caracteristicaAtributo;
 
 	@Digits(integer = 9, fraction = 4)
 	@Setter(value = AccessLevel.NONE)
@@ -91,12 +94,12 @@ public class Produto extends GeradorId {
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "produto_atributo", joinColumns = @JoinColumn(name = "produto_id"))
 	@BatchSize(size = 10)
-	private List<Atributo> atributos = new ArrayList<>();
+	private Set<Atributo> atributos = new HashSet<>();
 
 	@Fetch(FetchMode.SUBSELECT)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "produto_componente", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "componente_id"))
-	private List<Componente> componentes;
+	private Set<Componente> componentes;
 
 	public void setNomeproduto(String nomeproduto) {
 		if (nomeproduto != null) {
@@ -128,5 +131,25 @@ public class Produto extends GeradorId {
 	public void setPrecovenda(BigDecimal precovenda) {
 		this.precovenda = precovenda.setScale(3, RoundingMode.HALF_UP);
 
+	}
+
+	@Transient
+	private String concatenar() {
+		StringBuilder strBuilder = new StringBuilder();
+
+		for (Atributo atributo : atributos) {
+			strBuilder.append(atributo.getTipo()).append(" : ").append(atributo.getValor()).append(" | ");
+		}
+
+		// Remove o último "| " se houver algum atributo
+		if (!atributos.isEmpty()) {
+			strBuilder.setLength(strBuilder.length() - 2);
+		}
+
+		return strBuilder.toString();
+	}
+
+	public String getCaracteristicaAtributo() {
+		return concatenar();
 	}
 }

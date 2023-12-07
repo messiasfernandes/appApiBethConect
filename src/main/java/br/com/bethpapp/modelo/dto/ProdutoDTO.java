@@ -39,7 +39,7 @@ public class ProdutoDTO {
 	private String codigoEan13;
 	private Boolean controlarestoque;
 	private String caracteristica;
-
+	private String caracteristicaAtributo;
 	private String codigofabricante;
 	@JsonFormat(pattern = "#,##0.00", shape = Shape.STRING)
 	@NumberFormat(pattern = "#,##0.00")
@@ -54,6 +54,6 @@ public class ProdutoDTO {
 	private EstoqueDTO estoque;
 	private Set<ProdutoFornecedorDTO> produtoFonecedores = new HashSet<>();
 
-	private List<AtributoDTO> atributos = new ArrayList<>();
-	private List<ComponeteDTO> componentes;
+	private Set<AtributoDTO> atributos = new HashSet<>();
+	private Set<ComponeteDTO> componentes;
 }

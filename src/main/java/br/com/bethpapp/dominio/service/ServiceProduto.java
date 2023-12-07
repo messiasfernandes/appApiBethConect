@@ -63,9 +63,9 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 	   
 		Produto produto = null;
 		try {
-			if (objeto.getAtributos().size() > 0) {
-				objeto.setCaracteristica(concatenar(objeto));
-			}
+//			if (objeto.getAtributos().size() > 0) {
+////				objeto.setCaracteristica(concatenar(objeto));
+////			}
 			if (objeto.getProdutoFonecedores().size() > 0) {
 				System.out.println("ENTROU aqui");
 				 objeto.getProdutoFonecedores().forEach(p-> p.setProduto(objeto));
@@ -94,28 +94,28 @@ public class ServiceProduto extends ServiceFuncoes implements ServiceModel<Produ
 
 
 
-	private String concatenar(Produto objeto) {
-		StringBuilder strBuilder = new StringBuilder();
-		var tam = objeto.getAtributos().size() - 1;
-
-		for (int i = 0; i < objeto.getAtributos().size(); i++) {
-
-			if (i == tam) {
-
-				// strBuilder.append(objeto.getAtributos().get(i).getTipo().concat(" : "));
-				strBuilder.append(objeto.getAtributos().get(i).getValor().concat(" "));
-
-			} else {
-
-				// strBuilder.append(objeto.getAtributos().get(i).getTipo().concat(" :"));
-				strBuilder.append(objeto.getAtributos().get(i).getValor().concat(" | "));
-			}
-
-		}
-
-		return strBuilder.toString();
-
-	}
+//	private String concatenar(Produto objeto) {
+//		StringBuilder strBuilder = new StringBuilder();
+//		var tam = objeto.getAtributos().size() - 1;
+//
+//		for (int i = 0; i < objeto.getAtributos().size(); i++) {
+//
+//			if (i == tam) {
+//
+//				// strBuilder.append(objeto.getAtributos().get(i).getTipo().concat(" : "));
+//				strBuilder.append(objeto.getAtributos().get(i).getValor().concat(" "));
+//
+//			} else {
+//
+//				// strBuilder.append(objeto.getAtributos().get(i).getTipo().concat(" :"));
+//				strBuilder.append(objeto.getAtributos().get(i).getValor().concat(" | "));
+//			}
+//
+//		}
+//
+//		return strBuilder.toString();
+//
+//	}
 
 	public Long buscarCodFabricante(String codigofabricante) {
 		return daoProduto.isCodigoFabCadastrado(codigofabricante);

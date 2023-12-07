@@ -35,7 +35,8 @@ public class ProdutoQueryImpl extends ServiceFuncoes implements ProdutoQuery {
 		root.fetch("subcategoria", JoinType.LEFT).fetch("categoria", JoinType.LEFT);
 		root.fetch("estoque", JoinType.LEFT);
 		root.fetch("atributos", JoinType.LEFT);
-	//	 root.fetch("produtoFonecedores", JoinType.LEFT);
+		 root.fetch("produtoFonecedores", JoinType.LEFT).fetch("fornecedor");
+		 root.fetch("componentes",  JoinType.LEFT);
 		criteria.select(root);
 
 		criteria.where(predicates);
